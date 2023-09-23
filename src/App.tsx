@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
   return (
-    <div>
+    <div className={'grid text-red-600 font-bold text-lg'}>
       Init
     </div>
   );
