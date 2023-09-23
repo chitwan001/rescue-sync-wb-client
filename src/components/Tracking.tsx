@@ -18,38 +18,37 @@ const Marker = ({feature}: { feature: string }) => {
 
 export default function Tracking() {
     const {position, positionError} = useGeolocationAPI()
-    const mapContainer = useRef(null);
-    const map = useRef(null);
-    const locationRef = useRef<HTMLDivElement>();
-    const [zoom, setZoom] = useState(15);
+    const [initialized, setInitialized] = useState(false)
+    const mapContainerRef = useRef(null);
+    const mapRef = useRef<mapboxgl.Map | null>(null)
+    // Initialize map when component mounts
     useEffect(() => {
-        // if (map.current) return; // initialize map only once
-        if (position) {
-            let newMap = new mapboxgl.Map({
-                container: mapContainer.current,
-                style: 'mapbox://styles/mapbox/streets-v11',
+        if (position && !initialized) {
+            mapRef.current = new mapboxgl.Map({
+                container: mapContainerRef.current,
+                style: 'mapbox://styles/mapbox/dark-v10',
                 center: [position.LONGITUDE, position.LATITUDE],
-                zoom: zoom
+                zoom: 14,
+                dragRotate: false,
+                scrollZoom: false,
+                minZoom: 8
             });
-            new mapboxgl.Marker().setLngLat([position.LONGITUDE, position.LATITUDE]).addTo(newMap)
-            const coords = generateRandomCoordinatesWithinRadius(position.LATITUDE, position.LONGITUDE, 1)
-            // Create a new DOM node and save it to the React ref
-            locationRef.current = document.createElement('div');
-            // Render a Marker Component on our new DOM node
-            createRoot(locationRef.current).render(
-                <Marker feature={"HELP LOCATION"}/>
-            );
-            // new mapboxgl.Marker().setLngLat([coords.longitude, coords.latitude]).addTo(newMap)
-            map.current = newMap
+
+// Create a default Marker and add it to the map.
+            const coords = generateRandomCoordinatesWithinRadius()
+            console.log(coords)
+            new mapboxgl.Marker({color: 'green', rotation: 90})
+                .setLngLat([position.LONGITUDE, position.LATITUDE])
+                .addTo(mapRef.current);
+            setInitialized(true)
         }
+
+        // Clean up on unmount
     }, [position]);
 
-    const markerClicked = (title: string) => {
-        window.alert(title);
-    };
 
     return (
-        <div ref={mapContainer} className={'grid w-screen h-screen'}>
+        <div ref={mapContainerRef} className={'grid overflow-hidden w-screen h-screen'}>
 
         </div>
     )
