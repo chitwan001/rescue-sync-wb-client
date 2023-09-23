@@ -9,11 +9,50 @@ import avatar from "../../assets/images/avatar.jpg"
 import person1 from "../../assets/images/person-1.jpg"
 import person2 from "../../assets/images/person-2.jpg"
 import person3 from "../../assets/images/person-3.jpg"
-import {Link} from "react-router-dom";
+import {Link, Route, Routes,useLocation} from "react-router-dom";
 import Overview from "./Overview";
+import {useEffect} from "react";
 
 
 export default function Dashboard() {
+    const location = useLocation()
+    useEffect(() => {
+        const pathname = location.pathname;
+        //remove active class from each tab
+        removeActiveClassFromTabs()
+        // overview is opened at dashboard
+        if(pathname === '/dashboard'){
+            addActiveClassToTab('tab-overview');
+        }
+        const tabName = location.pathname.split('/dashboard')[1];
+        switch (tabName) {
+            case '/admins':
+                addActiveClassToTab('tab-admins')
+                break;
+            case '/teams':
+                addActiveClassToTab('tab-teams')
+                break;
+            case '/resources':
+                addActiveClassToTab('tab-resources')
+                break;
+        }
+    }, [location]);
+
+    function addActiveClassToTab(id:string) {
+        const elem = document.getElementById(id)
+        if(elem){
+            elem.classList.add('active');
+        }
+    }
+
+    function removeActiveClassFromTabs(){
+        const tabList = document.getElementsByClassName('tab-btn-item')
+        for (let i = 0; i < tabList.length; i++) {
+            const tab = tabList[i];
+            tab.classList.remove('active');
+        }
+    }
+
     return (
         <div className="main-wrapper">
             <div className="page-top">
@@ -89,17 +128,17 @@ export default function Dashboard() {
                         <div className="content-tab-head">
                             <div className="tab-l">
                                 <ul className="tab-btns">
-                                    <li className="tab-btn-item active">
-                                        <button className="tab-btn-link" type="button">Overview</button>
+                                    <li id={'tab-overview'} className="tab-btn-item active">
+                                        <Link to={'/'} className="tab-btn-link" type="button">Overview</Link>
                                     </li>
-                                    <li className="tab-btn-item">
-                                        <button className="tab-btn-link" type="button">Admins</button>
+                                    <li id={'tab-admins'} className="tab-btn-item">
+                                        <Link to={'admins'} className="tab-btn-link" type="button">Admins</Link>
                                     </li>
-                                    <li className="tab-btn-item">
-                                        <button className="tab-btn-link" type="button">Teams</button>
+                                    <li id={'tab-teams'} className="tab-btn-item">
+                                        <Link to={'teams'} className="tab-btn-link" type="button">Teams</Link>
                                     </li>
-                                    <li className="tab-btn-item">
-                                        <button className="tab-btn-link" type="button">Tools/Equipments</button>
+                                    <li id={'tab-resources'} className="tab-btn-item">
+                                        <Link to={'resources'} className="tab-btn-link" type="button">Tools/Equipments</Link>
                                     </li>
                                     {/* <!-- <li className="tab-btn-item">
                               <button className="tab-btn-link" type="button">Files</button>
@@ -122,7 +161,12 @@ export default function Dashboard() {
                         </div>
                     </div>
                     <div className="content-tab-body">
-                        <Overview/>
+                        <Routes>
+                            <Route path={'/'} element={<Overview/>}/>
+                            <Route path={'/admins'} element={<div>Admin</div>}/>
+                            <Route path={'/teams'} element={<div>Teams</div>}/>
+                            <Route path={'/resources'} element={<div>Resources</div>}/>
+                        </Routes>
                     </div>
                 </div>
             </div>

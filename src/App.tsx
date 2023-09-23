@@ -26,7 +26,7 @@ function App() {
             !token ? (
                 <Routes>
                     <Route element={<Login/>} path={'/login'}/>
-                    <Route path={'/dashboard'} element={<Dashboard />}/>
+                    <Route path={'/dashboard/*'} element={<Dashboard />}/>
                     <Route path={'/map'} element={<Tracking />}/>
                     <Route path={'*'} element={<Redirect/>}/>
                 </Routes>
