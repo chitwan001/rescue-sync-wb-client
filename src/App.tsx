@@ -7,8 +7,8 @@ import PageLoader from "./pages/PageLoader";
 import {Route, Routes} from "react-router-dom";
 import Login from "./pages/Login";
 import Redirect from "./components/Redirect";
+import Tracking from "./components/Tracking";
 import Dashboard from './components/Dashboard';
-
 
 function App() {
     const { token, getUserData, user } = useAuth();
@@ -36,7 +36,6 @@ function App() {
             //     </Routes>
             // )
             <Dashboard />
-        }
     </React.Suspense>
   );
 }
