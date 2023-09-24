@@ -23,7 +23,8 @@ function App() {
     <React.Suspense fallback={
         <PageLoader/>
     }>
-        {
+        <Dashboard/>
+        {/* {
             !token ? (
                 <Routes>
                     <Route element={<Login/>} path={'/login'}/>
@@ -38,8 +39,8 @@ function App() {
                     <Route path="*" element={<Redirect />} />
                 </Routes>
             )
-        }
-        
+        } */}
+       
     </React.Suspense>
   );
 }

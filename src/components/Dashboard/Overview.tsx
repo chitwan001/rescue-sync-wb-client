@@ -1,8 +1,10 @@
 import dots from "../../assets/icons/dots-icon.svg";
-import person1 from "../../assets/images/person-1.jpg";
-import person3 from "../../assets/images/person-3.jpg";
-import person2 from "../../assets/images/person-2.jpg";
-import avatar from "../../assets/images/avatar.jpg";
+import person1 from "../../assets/images/p1.jpeg"
+import person2 from "../../assets/images/p2.jpeg"
+import person3 from "../../assets/images/p3.jpeg"
+import person4 from "../../assets/images/p4.jpeg"
+import person6 from "../../assets/images/p6.jpeg"
+import avatar from "../../assets/images/avatar.jpeg";
 
 export default function Overview() {
     return (

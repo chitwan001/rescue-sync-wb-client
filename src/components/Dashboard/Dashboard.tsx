@@ -5,7 +5,7 @@ import search from "../../assets/icons/search-icon.svg"
 import chevron from "../../assets/icons/chevron-down.svg"
 import funnel from "../../assets/icons/funnel-icon.svg"
 import dots from "../../assets/icons/dots-icon.svg"
-import avatar from "../../assets/images/avatar.jpg"
+import avatar from "../../assets/images/avatar.jpeg"
 import person1 from "../../assets/images/person-1.jpg"
 import person2 from "../../assets/images/person-2.jpg"
 import person3 from "../../assets/images/person-3.jpg"
@@ -13,6 +13,9 @@ import {Link, Route, Routes,useLocation} from "react-router-dom";
 import Overview from "./Overview";
 import {useEffect} from "react";
 import {useAuth} from "../../context/auth-context";
+import Admin from "./Admins";
+import Teams from "./Teams"
+import Resources from "./Resouces"
 
 
 export default function Dashboard() {
@@ -140,16 +143,16 @@ export default function Dashboard() {
                             <div className="tab-l">
                                 <ul className="tab-btns">
                                     <li id={'tab-overview'} className="tab-btn-item active">
-                                        <Link to={'/dashboard'} className="tab-btn-link" type="button">Overview</Link>
+                                        <Link to={'/dashboard'}className="tab-btn-link" type="button">Overview</Link>
                                     </li>
-                                    <li id={'tab-admins'} className="tab-btn-item">
-                                        <Link to={'admins'} className="tab-btn-link" type="button">Admins</Link>
+                                    <li id={'tab-admins'} className="tab-btn-item active">
+                                        <Link to={'/admins'} className="tab-btn-link" type="button">Admins</Link>
                                     </li>
-                                    <li id={'tab-teams'} className="tab-btn-item">
+                                    <li id={'tab-teams'} className="tab-btn-item active">
                                         <Link to={'teams'} className="tab-btn-link" type="button">Teams</Link>
                                     </li>
                                     <li id={'tab-resources'} className="tab-btn-item">
-                                        <Link to={'resources'} className="tab-btn-link" type="button">Tools/Equipments</Link>
+                                        <Link to={'resources'} className="tab-btn-link" type="button">Equipments</Link>
                                     </li>
                                     {/* <!-- <li className="tab-btn-item">
                               <button className="tab-btn-link" type="button">Files</button>
@@ -173,10 +176,11 @@ export default function Dashboard() {
                     </div>
                     <div className="content-tab-body">
                         <Routes>
-                            <Route path={'/'} element={<Overview/>}/>
-                            <Route path={'/admins'} element={<div>Admin</div>}/>
-                            <Route path={'/teams'} element={<div>Teams</div>}/>
-                            <Route path={'/resources'} element={<div>Resources</div>}/>
+                            <Route path={'/dashboard'} element={<Overview/>}/>
+                            <Route path={'/Overview'} element={<Overview/>}/>
+                            <Route path={'/admins'} element={<Admin/>}/>
+                            <Route path={'/teams'} element={<Teams/>}/>
+                            <Route path={'/resources'} element={<Resources/>}/>
                         </Routes>
                     </div>
                 </div>
