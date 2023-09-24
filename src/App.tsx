@@ -10,35 +10,36 @@ import Tracking from "./components/Tracking";
 import Dashboard from './components/Dashboard/Dashboard';
 
 function App() {
-    const { token, getUserData, user } = useAuth();
+    const {token, getUserData, user} = useAuth();
     useEffect(() => {
         setAxiosDefault()
-        if(token){
-            console.log(token)
+        if (token) {
             setToken(token);
+            getUserData()
         }
     }, []);
-  return (
-    <React.Suspense fallback={
-        <PageLoader/>
-    }>
-        {
-            !token ? (
-                <Routes>
-                    <Route element={<Login/>} path={'/login'}/>
-                    <Route path={'/dashboard/*'} element={<Dashboard />}/>
-                    <Route path={'/map'} element={<Tracking />}/>
-                    <Route path={'*'} element={<Redirect/>}/>
-                </Routes>
-            ):(
-                <Routes>
-                    <Route path="/login" element={<Redirect />} />
-                    <Route path="/signup" element={<Redirect />} />
-                </Routes>
-            )
-        }
-    </React.Suspense>
-  );
+    return (
+        <React.Suspense fallback={
+            <PageLoader/>
+        }>
+            {
+                !token ? (
+                    <Routes>
+                        <Route element={<Login/>} path={'/login'}/>
+                        <Route path={'/map'} element={<Tracking/>}/>
+                        <Route path={'*'} element={<Redirect/>}/>
+                    </Routes>
+                ) : (
+                    <Routes>
+                        <Route path="/login" element={<Redirect/>}/>
+                        <Route path="/signup" element={<Redirect/>}/>
+                        <Route path={'/dashboard/*'} element={<Dashboard/>}/>
+                        <Route path="*" element={<Redirect/>}/>
+                    </Routes>
+                )
+            }
+        </React.Suspense>
+    );
 }
 
 export default App;

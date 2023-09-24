@@ -35,11 +35,47 @@ export default function Tracking() {
             });
 
 // Create a default Marker and add it to the map.
-            const coords = generateRandomCoordinatesWithinRadius()
-            console.log(coords)
-            new mapboxgl.Marker({color: 'green', rotation: 90})
+
+            new mapboxgl.Marker({color: 'blue', rotation: 90})
                 .setLngLat([position.LONGITUDE, position.LATITUDE])
                 .addTo(mapRef.current);
+
+            const coorsMap : number[][] = []
+            for (let i = 0; i < 5; i++) {
+                const coords = generateRandomCoordinatesWithinRadius(position.LATITUDE, position.LONGITUDE, 2)
+                coorsMap.push(coords)
+                new mapboxgl.Marker({color: 'green', rotation: 45})
+                    .setLngLat(coords)
+                    .addTo(mapRef.current);
+            }
+
+            mapRef.current.on('load', () => {
+                mapRef.current.addSource('route', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'properties': {},
+                        'geometry': {
+                            'type': 'LineString',
+                            'coordinates': coorsMap
+                        }
+                    }
+                });
+                mapRef.current.addLayer({
+                    'id': 'route',
+                    'type': 'line',
+                    'source': 'route',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': '#33a62e',
+                        'line-width': 8
+                    }
+                });
+            });
+
             setInitialized(true)
         }
 

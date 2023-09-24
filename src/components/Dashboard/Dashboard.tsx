@@ -12,11 +12,22 @@ import person3 from "../../assets/images/person-3.jpg"
 import {Link, Route, Routes,useLocation} from "react-router-dom";
 import Overview from "./Overview";
 import {useEffect} from "react";
+import {useAuth} from "../../context/auth-context";
 
 
 export default function Dashboard() {
     const location = useLocation()
+    const {user} = useAuth()
+
     useEffect(() => {
+        dashboardTabRouting()
+    }, [location]);
+
+    useEffect(() => {
+        console.log(user)
+    }, [user]);
+
+    function dashboardTabRouting(){
         const pathname = location.pathname;
         //remove active class from each tab
         removeActiveClassFromTabs()
@@ -36,7 +47,7 @@ export default function Dashboard() {
                 addActiveClassToTab('tab-resources')
                 break;
         }
-    }, [location]);
+    }
 
     function addActiveClassToTab(id:string) {
         const elem = document.getElementById(id)
@@ -129,7 +140,7 @@ export default function Dashboard() {
                             <div className="tab-l">
                                 <ul className="tab-btns">
                                     <li id={'tab-overview'} className="tab-btn-item active">
-                                        <Link to={'/'} className="tab-btn-link" type="button">Overview</Link>
+                                        <Link to={'/dashboard'} className="tab-btn-link" type="button">Overview</Link>
                                     </li>
                                     <li id={'tab-admins'} className="tab-btn-item">
                                         <Link to={'admins'} className="tab-btn-link" type="button">Admins</Link>
