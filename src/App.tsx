@@ -7,7 +7,7 @@ import PageLoader from "./pages/PageLoader";
 import {Route, Routes} from "react-router-dom";
 import Login from "./pages/Login";
 import Redirect from "./components/Redirect";
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/Dashboard/Dashboard';
 
 
 function App() {
@@ -24,19 +24,19 @@ function App() {
         <PageLoader/>
     }>
         {
-            // !token ? (
-            //     <Routes>
-            //         <Route element={<Login/>} path={'/login'}/>
-            //         <Route path={'*'} element={<Redirect/>}/>
-            //     </Routes>
-            // ):(
-            //     <Routes>
-            //         <Route path="/login" element={<Redirect />} />
-            //         <Route path="/signup" element={<Redirect />} />
-            //     </Routes>
-            // )
-            <Dashboard />
-            
+            !token ? (
+                <Routes>
+                    <Route element={<Login/>} path={'/login'}/>
+                    <Route path={'*'} element={<Redirect/>}/>
+                </Routes>
+            ):(
+                <Routes>
+                    <Route path="/login" element={<Redirect />} />
+                    <Route path="/signup" element={<Redirect />} />
+                    <Route path="/dashboard/*" element={<Dashboard />} />
+                    <Route path="/*" element={<Redirect />} />
+                </Routes>
+            )
         }
         
     </React.Suspense>

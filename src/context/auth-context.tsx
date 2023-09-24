@@ -1,7 +1,6 @@
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { AuthProp, User } from '../types';
-import { useCallback, createContext, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, createContext, useContext } from 'react';
 
 type authContextType = {
     user: User | null;
@@ -29,7 +28,6 @@ function AuthProvider(props: AuthProp) {
         'rescue-sync-user',
         null
     );
-    const navigate = useNavigate();
     const logout = useCallback(() => {
         setUser(null);
     }, [setUser]);

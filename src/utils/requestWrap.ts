@@ -1,7 +1,10 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { METHOD, ResponseType } from "../types";
+import axios, {AxiosRequestConfig} from "axios";
+import {METHOD, ResponseType} from "../types";
 
-async function requestWrap<T>(method: METHOD, url: string, data: Object | {}, options: AxiosRequestConfig<any>, addError: (data: ResponseType<any>) => void): Promise<ResponseType<T>> {
+async function requestWrap<T>(method: METHOD, url: string, data: Object | {}, options: AxiosRequestConfig<any>, addError: (data: ResponseType<any>) => void): Promise<{
+    response:ResponseType<T>,
+    headers:{}
+}> {
     let response: ResponseType<T> = {
         success: false,
         data: null,
@@ -14,42 +17,47 @@ async function requestWrap<T>(method: METHOD, url: string, data: Object | {}, op
         error: null,
         code: 404
     };
+    let headers = {}
     try {
 
         if (method === 'GET') {
-            response = await (
-                await axios.get(url, options)
-            ).data;
-        }
-        else if (method === 'POST') {
-            response = await (
-                await axios.post(url, data, options)
-            ).data;
+            const res = await axios.get(url, options);
+            response = res.data;
+            headers = res.headers
+
+        } else if (method === 'POST') {
+            const res = await axios.post(url,data, options);
+            response = res.data;
+            headers = res.headers
         }
     } catch (error: any) {
         if (error.code === axios.AxiosError.ERR_NETWORK) {
             apiError.code = 503;
             apiError.data = null;
             apiError.error = {
-                message: 'Cannot connect to server!',
-                statusCode: 503
+                message: 'Cannot connect to server!'
             };
             apiError.success = false;
-            return apiError;
+            return {response:apiError,headers:{}};
         }
         if (axios.isAxiosError(error)) {
             apiError.code = error.response?.data.code;
             apiError.data = error.response?.data.data;
             apiError.error = error.response?.data.error;
             apiError.success = error.response?.data.success;
-            return apiError;
+            return {response:apiError,headers:{}};
         }
     }
-    return response;
+    return {response,headers};
 }
-export default async function makeRequest<T>(method: METHOD, url: string, data: Object | {}, options: AxiosRequestConfig<any> = {}, addError: (data: ResponseType<any>) => void, setLoading: any): Promise<{ response: ResponseType<T>, displaySuccessMessage: () => void }> {
+
+export default async function makeRequest<T>(method: METHOD, url: string, data: Object | {}, options: AxiosRequestConfig<any> = {}, addError: (data: ResponseType<any>) => void, setLoading: any): Promise<{
+    response: ResponseType<T>,
+    headers:{},
+    displaySuccessMessage: () => void
+}> {
     setLoading(true);
-    const response = await requestWrap<T>(method, url, data, options, addError);
+    const {response,headers} = await requestWrap<T>(method, url, data, options, addError);
     if (response) {
         if (!response.success) {
             addError(response);
@@ -63,5 +71,5 @@ export default async function makeRequest<T>(method: METHOD, url: string, data: 
             }
         }
     }
-    return { response, displaySuccessMessage };
+    return {response,headers, displaySuccessMessage};
 }
