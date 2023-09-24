@@ -5,9 +5,9 @@ export type User = {
 }
 
 export enum USER_ROLE{
+    TEAM_MEMBER,
+    TEAM_LEADER,
+    ADMIN,
     SUPER_ADMIN,
-    AGENCY_SUPER_ADMIN,
-    AGENCY_ADMIN,
-    AGENCY_EMPLOYEE,
-    CITIZEN
+    FIRST_ADMIN
 }

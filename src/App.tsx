@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Redirect from "./components/Redirect";
 import Dashboard from './components/Dashboard/Dashboard';
 import AgencyRegistration from "./pages/AgencyRegistration";
+import Tracking from "./components/Tracking";
 
 
 function App() {
@@ -15,7 +16,6 @@ function App() {
     useEffect(() => {
         setAxiosDefault()
         if(token){
-            console.log(token)
             setToken(token);
         }
     }, []);
@@ -23,23 +23,24 @@ function App() {
     <React.Suspense fallback={
         <PageLoader/>
     }>
-        <Dashboard/>
-        {/* {
+        {
             !token ? (
                 <Routes>
                     <Route element={<Login/>} path={'/login'}/>
                     <Route element={<AgencyRegistration/>} path={'/registration'}/>
+                    <Route element={<Tracking/>} path={'/map'}/>
                     <Route path={'*'} element={<Redirect/>}/>
                 </Routes>
             ):(
                 <Routes>
                     <Route path="/login" element={<Redirect />} />
                     <Route path="/registration" element={<Redirect />} />
+                    <Route element={<Tracking/>} path={'/map'}/>
                     <Route path="/dashboard/*" element={<Dashboard />} />
                     <Route path="*" element={<Redirect />} />
                 </Routes>
             )
-        } */}
+        }
        
     </React.Suspense>
   );

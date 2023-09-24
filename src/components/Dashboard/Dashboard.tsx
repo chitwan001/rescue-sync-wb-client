@@ -143,10 +143,10 @@ export default function Dashboard() {
                             <div className="tab-l">
                                 <ul className="tab-btns">
                                     <li id={'tab-overview'} className="tab-btn-item active">
-                                        <Link to={'/dashboard'}className="tab-btn-link" type="button">Overview</Link>
+                                        <Link to={'/'} className="tab-btn-link" type="button">Overview</Link>
                                     </li>
                                     <li id={'tab-admins'} className="tab-btn-item active">
-                                        <Link to={'/admins'} className="tab-btn-link" type="button">Admins</Link>
+                                        <Link to={'admins'} className="tab-btn-link" type="button">Admins</Link>
                                     </li>
                                     <li id={'tab-teams'} className="tab-btn-item active">
                                         <Link to={'teams'} className="tab-btn-link" type="button">Teams</Link>
@@ -176,11 +176,10 @@ export default function Dashboard() {
                     </div>
                     <div className="content-tab-body">
                         <Routes>
-                            <Route path={'/dashboard'} element={<Overview/>}/>
-                            <Route path={'/Overview'} element={<Overview/>}/>
-                            <Route path={'/admins'} element={<Admin/>}/>
-                            <Route path={'/teams'} element={<Teams/>}/>
-                            <Route path={'/resources'} element={<Resources/>}/>
+                            <Route path={'/'} element={<Overview/>}/>
+                            <Route path={'admins'} element={<Admin/>}/>
+                            <Route path={'teams'} element={<Teams/>}/>
+                            <Route path={'resources'} element={<Resources/>}/>
                         </Routes>
                     </div>
                 </div>
