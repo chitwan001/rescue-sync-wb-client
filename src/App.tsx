@@ -7,6 +7,7 @@ import {Route, Routes} from "react-router-dom";
 import Login from "./pages/Login";
 import Redirect from "./components/Redirect";
 import Dashboard from './components/Dashboard/Dashboard';
+import AgencyRegistration from "./pages/AgencyRegistration";
 
 
 function App() {
@@ -26,14 +27,15 @@ function App() {
             !token ? (
                 <Routes>
                     <Route element={<Login/>} path={'/login'}/>
+                    <Route element={<AgencyRegistration/>} path={'/registration'}/>
                     <Route path={'*'} element={<Redirect/>}/>
                 </Routes>
             ):(
                 <Routes>
                     <Route path="/login" element={<Redirect />} />
-                    <Route path="/signup" element={<Redirect />} />
+                    <Route path="/registration" element={<Redirect />} />
                     <Route path="/dashboard/*" element={<Dashboard />} />
-                    <Route path="/*" element={<Redirect />} />
+                    <Route path="*" element={<Redirect />} />
                 </Routes>
             )
         }
