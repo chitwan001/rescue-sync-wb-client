@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import logo from './logo.svg';
-import './App.css';
 import {setAxiosDefault, setToken} from "./axiosDefault";
 import {useAuth} from "./context/auth-context";
 import PageLoader from "./pages/PageLoader";
